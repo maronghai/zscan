@@ -31,6 +31,12 @@ build.zig
 real    0m0.230s
 user    0m0.000s
 sys     0m0.031s
+
+
+$ du -sh `which rg zscan`
+384K    /c/ProgramData/chocolatey/bin/rg
+88K     /d/zbin/zscan
+
 ```
 
 ## Usage
