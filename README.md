@@ -2,6 +2,37 @@
 
 Scans a directory tree and prints file paths, respecting `.gitignore` rules including nested `.gitignore` files. Automatically skips binary files.
 
+
+x | time | size
+--- | --: | --:
+zscan | 55ms | 88K
+rg | 230ms | 384K
+
+
+# time
+
+```
+$ time zscan
+.\.gitignore
+.\build.zig
+.\README.md
+.\src\main.zig
+
+real    0m0.055s
+user    0m0.015s
+sys     0m0.015s
+
+
+$ time rg --files
+src\main.zig
+README.md
+build.zig
+
+real    0m0.230s
+user    0m0.000s
+sys     0m0.031s
+```
+
 ## Usage
 
 ```
