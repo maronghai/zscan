@@ -13,7 +13,7 @@ rg | 230ms | 384K | 444ms | 5.1MB
 
 ### time@win
 
-```
+```sh
 $ time zscan
 .\.gitignore
 .\build.zig
@@ -37,7 +37,7 @@ sys     0m0.031s
 
 ### size@win
 
-```
+```sh
 $ du -sh `which rg zscan`
 384K    rg
 88K     zscan
