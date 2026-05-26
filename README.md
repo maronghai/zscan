@@ -3,13 +3,15 @@
 Scans a directory tree and prints file paths, respecting `.gitignore` rules including nested `.gitignore` files. Automatically skips binary files.
 
 
-x | time | size
---- | --: | --:
-zscan | 55ms | 88K
-rg | 230ms | 384K
+x | time@win | size@win | time@linux | size@linx
+--- | --: | --: | --: | --:
+zscan | 55ms | 88K | 40ms | 60KB
+rg | 230ms | 384K | 444ms | 5.1MB
 
 
-# time
+## win
+
+### time@win
 
 ```
 $ time zscan
@@ -31,12 +33,14 @@ build.zig
 real    0m0.230s
 user    0m0.000s
 sys     0m0.031s
+```
 
+### size@win
 
+```
 $ du -sh `which rg zscan`
-384K    /c/ProgramData/chocolatey/bin/rg
-88K     /d/zbin/zscan
-
+384K    rg
+88K     zscan
 ```
 
 ## Usage
