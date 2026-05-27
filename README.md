@@ -1,17 +1,61 @@
-# zscan — file scanner with .gitignore support
+# zscan
 
-Scans a directory tree and prints file paths, respecting `.gitignore` rules including nested `.gitignore` files. Automatically skips binary files.
+**Tiny. Fast. `.gitignore`-aware.**
 
+A blazing-fast file scanner written in Zig that respects `.gitignore` rules — including nested `.gitignore` files — while automatically skipping binary files.
 
-x | time@win | size@win | time@linux | size@linx
---- | --: | --: | --: | --:
-zscan | 55ms | 88K | 40ms | 60KB
-rg | 230ms | 384K | 444ms | 5.1MB
+Perfect for AI agents, code indexing, RAG pipelines, CLI tooling, and developer workflows.
 
+---
 
-## win
+## Why zscan?
 
-### time@win
+Most file scanners are either:
+
+* **Fast but huge**
+* **Tiny but incomplete**
+* **Ignore `.gitignore` semantics**
+* **Or pull in massive dependencies**
+
+`zscan` focuses on one thing:
+
+> Scan source files correctly and extremely fast.
+
+---
+
+## Features
+
+* ✅ Full `.gitignore` support
+* ✅ Nested `.gitignore` scoping
+* ✅ Automatically skips binary files
+* ✅ Extremely small binary size
+* ✅ Null-separated output (`-0`)
+* ✅ Zero runtime dependencies
+* ✅ Written in pure Zig
+
+---
+
+## Performance
+
+### Windows
+
+| Tool      |     Time | Binary Size |
+| --------- | -------: | ----------: |
+| **zscan** | **55ms** |    **88KB** |
+| rg        |    230ms |       384KB |
+
+### Linux
+
+| Tool      |     Time | Binary Size |
+| --------- | -------: | ----------: |
+| **zscan** | **40ms** |    **60KB** |
+| rg        |    444ms |       5.1MB |
+
+---
+
+## Example
+
+### zscan
 
 ```sh
 $ time zscan
@@ -21,49 +65,123 @@ $ time zscan
 .\src\main.zig
 
 real    0m0.055s
-user    0m0.015s
-sys     0m0.015s
+```
 
+### ripgrep
 
+```sh
 $ time rg --files
 src\main.zig
 README.md
 build.zig
 
 real    0m0.230s
-user    0m0.000s
-sys     0m0.031s
 ```
 
-### size@win
-
-```sh
-$ du -sh `which rg zscan`
-384K    rg
-88K     zscan
-```
+---
 
 ## Usage
 
-```
+```sh
 zscan [root]
 zscan -0 [root]
 ```
 
-- `root` — directory to scan (default: `.`)
-- `-0` — null-separated output instead of newlines (for piping to `xargs -0`)
+### Options
 
-## Features
+| Option | Description                          |
+| ------ | ------------------------------------ |
+| `root` | Directory to scan (default: `.`)     |
+| `-0`   | Null-separated output for `xargs -0` |
 
-- Reads `.gitignore` from the root directory and applies its rules
-- Supports nested `.gitignore` — each subdirectory's rules are scoped to that subtree
-- Binary detection — skips files containing null bytes in the first 8KB (git's heuristic)
-- `-0` flag for safe handling of filenames with special characters
+---
 
-## Build
+## `.gitignore` Support
 
-Requires Zig 0.16.0.
+`zscan` correctly applies:
 
-```
+* Root `.gitignore`
+* Nested `.gitignore`
+* Scoped ignore rules per subtree
+
+This makes it ideal for:
+
+* AI coding agents
+* Monorepos
+* Code search
+* Embedding pipelines
+* Source indexing
+* Build tooling
+
+---
+
+## Binary Detection
+
+Binary files are skipped automatically using Git-style heuristics:
+
+* Reads the first 8KB
+* Detects null bytes
+* Skips non-text files
+
+---
+
+## Installation
+
+### Build from source
+
+Requires Zig `0.16.0`.
+
+```sh
 zig build
 ```
+
+---
+
+## Philosophy
+
+`zscan` is designed around a simple idea:
+
+> Developer tools should be fast, correct, and small.
+
+No giant dependency tree.
+No runtime overhead.
+No unnecessary features.
+
+Just scan files fast.
+
+---
+
+## Use Cases
+
+* AI Agent runtimes
+* LLM context builders
+* RAG preprocessing
+* Source code indexing
+* CLI pipelines
+* Static analysis tools
+* Lightweight developer tooling
+
+---
+
+## Tech Stack
+
+* Language: Zig
+* Dependency: None
+* Output: Native single binary
+
+---
+
+## Roadmap
+
+* [ ] `.ignore` support
+* [ ] `.dockerignore` support
+* [ ] Parallel directory walking
+* [ ] File metadata output
+* [ ] JSON mode
+* [ ] WASI build target
+
+---
+
+## Star History
+
+If you find `zscan` useful, consider giving it a star ⭐
